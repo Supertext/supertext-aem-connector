@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" 
+    xmlns:rep="internal" 
+    jcr:primaryType="rep:SystemUser" 
+    jcr:uuid="c6d12359-f352-3ed3-b20b-5985fdeed2a7" 
+    rep:authorizableId="supertext-service" 
+    rep:principalName="supertext-service"/>

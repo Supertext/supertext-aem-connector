@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2012-01-10T16:53:07.216+01:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/supertext-connector/templates/supertext-connector-servicepage"
+        jcr:description="Supertext translation connector desciption"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Supertext Connector"
+        cq:configTemplate="/apps/supertext-connector/templates/supertext-connector-servicepage"
+        editformPath="/apps/supertext-connector/templates/forms/editform.html"
+        descriptionPath="/apps/supertext-connector/templates/forms/description.html"
+        sling:resourceType="cq/cloudserviceconfigs/components/servicepage"
+        descriptionExtended="Supertext Connector description extended."
+        description="Translate with Supertext Connector."
+        inclusionRank="{Long}202"
+        mergeList="true"
+        ranking="10"
+        allowMultiple="{Boolean}true"
+        serviceAdminUrl="http://www.supertext.com"
+        serviceUrl="http://www.supertext.com"
+        serviceUrlLabel="Supertext Connector"
+        thumbnailPath="/apps/supertext-connector/templates/supertext-connector-servicepage/thumbnail.png"/>
+</jcr:root>

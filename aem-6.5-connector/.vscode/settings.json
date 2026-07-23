@@ -1,0 +1,9 @@
+{
+  "maven.terminal.favorites": [
+    {
+      "alias": "aem",
+      "command": "-PautoInstallPackage -Padobe-public clean install"
+    }
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
+}

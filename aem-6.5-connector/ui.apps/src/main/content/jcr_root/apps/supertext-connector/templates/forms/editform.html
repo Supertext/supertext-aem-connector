@@ -1,0 +1,27 @@
+<sly data-sly-use.config="${'ch.supertext.aem.translation.connector.ui.models.SupertextTranslationConnectorModel'}">
+
+	<!--/* form id should always be services-editor-form, data-foundation-form-ajax and data-foundation-form-loadingmask are used to auto submit the form on save and close  */-->
+    <form id="services-editor-form" method="post" action="${config.formPostPath}" class="coral-form coral-Form--vertical foundation-form" data-foundation-form-ajax="true" data-foundation-form-loadingmask="true">
+
+		<!--/* First Load the client library {js, css} both */-->
+        <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" />
+        <sly data-sly-call="${clientlib.js @ categories='aem.supertext.connector'}" />
+        <sly data-sly-call="${clientlib.css @ categories='aem.supertext.connector'}" />
+
+
+        <!--/* Title of the Edit form */-->
+        <h3 class="form-legend">${'Supertext Translation Connector Settings' @i18n, locale=request.locale}</h3>
+
+        <!--/* Input field with label and input area */-->
+		<label class="fieldlabel">${'Server URL' @i18n, locale=request.locale} </label>
+		<input class="inputTextField" type="text" is="coral-textfield" required="true" placeholder="${'The Supertext URL to use (e.g. https://www.supertext.ch)' @i18n, locale=request.locale}" name="./serverurl" value="${config.serverUrl}" aria-invalid="false">
+
+        <!--/* Input field with label and input area */-->
+		<label class="fieldlabel">${'Username' @i18n, locale=request.locale} </label>
+		<input class="inputTextField" type="text" is="coral-textfield" required="true" placeholder="${'The username of the Supertext account for placing orders (e.g. example@supertext.ch)' @i18n, locale=request.locale}" name="./username" value="${config.username}">
+
+        <!--/* Input field with label and input area */-->
+		<label class="fieldlabel">${'API key' @i18n, locale=request.locale} </label>
+		<input class="inputTextField supertextApiKey" type="text" is="coral-textfield" required="true" placeholder="${'The API key from the Supertext account settings (e.g. 7db8e417-7a3f-4254-b7f2-6a0b9620d4d1)' @i18n, locale=request.locale}" name="./apikey" value="${config.apiKey}">
+	</form>
+</sly>
