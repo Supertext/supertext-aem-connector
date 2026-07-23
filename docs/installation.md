@@ -23,10 +23,12 @@ The resulting `.zip` packages are produced under `ui.content/target/` and `ui.ap
 
 ## Installation
 
+<a id="open-package-manager"></a>
 **1. Open the package manager.**
 
 ![AEM Package Manager](assets/image-3.png)
 
+<a id="install-content-package"></a>
 **2. Upload and install the content package (`supertext-connector.ui.content-2.5.zip`).**
 
 ![Upload package](assets/image-4.png)
@@ -41,16 +43,19 @@ The resulting `.zip` packages are produced under `ui.content/target/` and `ui.ap
 
 The package is now installed.
 
+<a id="install-apps-package"></a>
 **3. Repeat the steps under 2. for the apps package (`supertext-connector.ui.apps-2.5.zip`).**
 
 ![Apps package installed](assets/image-11.png)
 
 All necessary packages are now installed.
 
+<a id="open-translation-cloud-services"></a>
 **4. Open Translation Cloud Services.**
 
 ![Translation Cloud Services](assets/image-10.png)
 
+<a id="create-connector-configuration"></a>
 **5. Create a connector configuration.**
 
 ![Create configuration](assets/image-13.png)
