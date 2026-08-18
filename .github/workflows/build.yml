@@ -1,0 +1,47 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: mvn verify (JDK ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The bundle targets Java 8 bytecode; 11 is what AEM 6.5 runs on.
+        java: ['8', '11']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      # Resolves com.adobe.aem:uber-jar from repo.adobe.com via the
+      # adobe-public profile, which the parent pom activates by default.
+      - name: Build and test
+        working-directory: aem-6.5-connector
+        run: mvn -B -ntp verify
+
+      - name: Upload content packages
+        if: matrix.java == '11'
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-packages
+          path: aem-6.5-connector/**/target/*.zip
+          if-no-files-found: error
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-jdk${{ matrix.java }}
+          path: aem-6.5-connector/**/target/surefire-reports/**
