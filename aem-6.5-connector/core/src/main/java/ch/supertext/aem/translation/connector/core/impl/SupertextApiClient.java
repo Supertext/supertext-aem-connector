@@ -26,9 +26,9 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class SupertextApiClient {
@@ -43,7 +43,6 @@ public class SupertextApiClient {
     private static final String REFERRER_NAME = "Adobe Experience Manager Connector";
     private static final String COMPONENT_NAME = "supertext-connector";
     private static final String COMPONENT_VERSION = "2.0.0";
-    private static final ContentType JSON_UTF8 = ContentType.APPLICATION_JSON.withCharset(StandardCharsets.UTF_8);
 
     private String serverUrl;
     private String authHeader;
@@ -435,14 +434,13 @@ public class SupertextApiClient {
         return fileDatas;
     }
 
-    private HttpPost getJsonHttpPost(URI uri, String json) {
+    private HttpPost getJsonHttpPost(URI uri, String json) throws UnsupportedEncodingException {
         HttpPost httpPost = new HttpPost(uri);
-        // The entity must be given an explicit charset. StringEntity(String) would default to
-        // ISO-8859-1, which corrupts any non-ASCII character in the JSON body (e.g. German umlauts)
-        // and makes the request body undeserialisable for the API.
-        httpPost.setEntity(new StringEntity(json, JSON_UTF8));
+        httpPost.setEntity(new StringEntity(json));
         httpPost.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
         httpPost.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+        httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
+        httpPost.setHeader(HttpHeaders.CONTENT_ENCODING, "UTF-8");
         return httpPost;
     }
 
@@ -453,11 +451,12 @@ public class SupertextApiClient {
         return httpGet;
     }
 
-    private HttpPut getJsonHttpPut(URI uri, String json) {
+    private HttpPut getJsonHttpPut(URI uri, String json) throws UnsupportedEncodingException {
         HttpPut httpPut = new HttpPut(uri);
-        httpPut.setEntity(new StringEntity(json, JSON_UTF8));
+        httpPut.setEntity(new StringEntity(json));
         httpPut.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
         httpPut.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+        httpPut.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
         return httpPut;
     }
 
