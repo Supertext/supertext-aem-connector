@@ -84,14 +84,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.4.0</version>
                 <inherited>true</inherited>
             </plugin>
             <!-- Maven Jar Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.5.1</version>
             </plugin>
             <!-- Maven Enforcer Plugin -->
             <plugin>
@@ -153,7 +153,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.5.0</version>
                 </plugin>
                 <!-- Maven SCR Plugin -->
                 <plugin>
@@ -177,13 +177,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.5.0</version>
                 </plugin>
                 <!-- Maven Compiler Plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>3.16.0</version>
                 </plugin>
                 <!-- Maven Installer Plugin -->
                 <plugin>
@@ -213,7 +213,7 @@
                 <plugin>
                     <groupId>org.apache.sling</groupId>
                     <artifactId>maven-sling-plugin</artifactId>
-                    <version>2.2.0</version>
+                    <version>2.4.2</version>
                     <configuration>
                         <slingUrl>http://${aem.host}:${aem.port}/system/console</slingUrl>
                         <deploymentMethod>WebConsole</deploymentMethod>
@@ -265,13 +265,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.11.0</version>
                 </plugin>
                 <!-- Build Helper Maven Plugin -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.6.2</version>
                 </plugin>
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
@@ -544,7 +544,7 @@
             <dependency>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.scr.annotations</artifactId>
-                <version>1.9.6</version>
+                <version>1.12.0</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -576,7 +576,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>uber-jar</artifactId>
-                <version>6.5.2</version>
+                <version>6.6.3</version>
                 <classifier>apis</classifier>
                 <scope>provided</scope>
             </dependency>
@@ -591,7 +591,7 @@
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>
                 <artifactId>jsp-api</artifactId>
-                <version>2.1</version>
+                <version>2.2</version>
                 <scope>provided</scope>
             </dependency>
             <!-- JCR -->
@@ -605,7 +605,7 @@
             <dependency>
                 <groupId>com.day.cq.wcm</groupId>
                 <artifactId>cq-wcm-taglib</artifactId>
-                <version>5.7.4</version>
+                <version>5.8.2</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
