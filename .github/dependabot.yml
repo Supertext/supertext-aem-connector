@@ -8,6 +8,30 @@ updates:
     groups:
       minor-and-patch:
         update-types: ["minor", "patch"]
+    # AEM 6.5 provides these APIs at runtime (provided scope or imported from
+    # AEM's OSGi container). They must stay at what AEM 6.5 ships: newer
+    # versions compile against APIs 6.5 doesn't have or raise the bundle's
+    # Import-Package ranges above what 6.5 exports. See README -> Dependency updates.
+    ignore:
+      - dependency-name: "com.adobe.aem:uber-jar"
+      - dependency-name: "org.osgi:*"
+      - dependency-name: "org.apache.felix:org.apache.felix.scr.annotations"
+      - dependency-name: "org.apache.sling:org.apache.sling.models.api"
+      - dependency-name: "javax.jcr:jcr"
+      - dependency-name: "javax.servlet:servlet-api"
+      - dependency-name: "javax.servlet.jsp:jsp-api"
+      - dependency-name: "com.day.cq.wcm:cq-wcm-taglib"
+      # Gson is imported from AEM, not embedded: a newer compile version
+      # raises the import floor (e.g. [2.14,3)) above AEM 6.5's Gson bundle.
+      - dependency-name: "com.google.code.gson:gson"
+      # AEM 6.5 exports slf4j 1.7; slf4j 2.x makes the bundle import [2.0,3).
+      - dependency-name: "org.slf4j:*"
+        versions: [">=2"]
+      # 1.x has no `content-package` packaging any more (only remote
+      # install/build goals); building packages needs a migration to
+      # org.apache.jackrabbit:filevault-package-maven-plugin.
+      - dependency-name: "com.day.jcr.vault:content-package-maven-plugin"
+        versions: [">=1"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

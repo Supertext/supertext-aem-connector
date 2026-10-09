@@ -30,6 +30,14 @@ This produces two AEM content packages:
 
 Install both through the AEM Package Manager as described in the [installation guide](docs/installation.md).
 
+### Dependency updates
+
+Dependabot (`.github/dependabot.yml`) proposes Maven and GitHub Actions updates weekly; CI runs `mvn verify` on JDK 8 and 11. Some updates are ignored on purpose:
+
+- **APIs provided by AEM 6.5** (`uber-jar`, OSGi, Felix SCR annotations, Sling Models API, JCR, Servlet/JSP, `cq-wcm-taglib`) stay at the versions AEM 6.5 ships. Newer ones compile against APIs 6.5 doesn't have (e.g. `uber-jar` 6.6.x).
+- **Gson** and **slf4j** are imported from AEM's OSGi container, not embedded. The bundle's `Import-Package` range comes from the compile version, so Gson above 2.8 or slf4j 2.x (`[2.0,3)`) would leave the bundle unresolved on AEM 6.5 (which exports slf4j 1.7). Check `core/target/*.jar` → `META-INF/MANIFEST.MF` before changing either.
+- **`content-package-maven-plugin` 1.x** dropped the `content-package` packaging that `ui.apps` and `ui.content` use; moving to `org.apache.jackrabbit:filevault-package-maven-plugin` is a separate migration.
+
 <!-- supertext-plugins:start (shared list, keep identical in every Supertext plugin repo) -->
 ## Supertext plugins for other systems
 
