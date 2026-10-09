@@ -1,0 +1,2 @@
+# Adobe's product pages block automated clients (the connection is reset); the links work in a browser.
+^https://business\.adobe\.com/
