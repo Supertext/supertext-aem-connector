@@ -38,6 +38,15 @@ Dependabot (`.github/dependabot.yml`) proposes Maven and GitHub Actions updates 
 - **Gson** and **slf4j** are imported from AEM's OSGi container, not embedded. The bundle's `Import-Package` range comes from the compile version, so Gson above 2.8 or slf4j 2.x (`[2.0,3)`) would leave the bundle unresolved on AEM 6.5 (which exports slf4j 1.7). Check `core/target/*.jar` → `META-INF/MANIFEST.MF` before changing either.
 - **`content-package-maven-plugin`** stays at 0.5.1: 0.5.24 adds package-dependency validation that fails on `ui.apps` (its dependency on `ui.content` isn't in Maven coordinates, and `/apps` isn't covered), and 1.x dropped the `content-package` packaging that `ui.apps` and `ui.content` use. Moving on is a separate migration to `org.apache.jackrabbit:filevault-package-maven-plugin`.
 
+## Code quality and security checks
+
+- **Checks** workflow (`.github/workflows/checks.yml`): [actionlint](https://github.com/rhysd/actionlint) and [zizmor](https://docs.zizmor.sh/) lint the workflows on every push and pull request. Dependency review fails a pull request that adds a package with a known vulnerability (moderate or worse). Actions are pinned to commit SHAs; Dependabot keeps the pins up to date. To run the workflow lint locally: `pip install actionlint-py zizmor`, then `actionlint` and `zizmor .github/workflows` in the repo root.
+- **Links** workflow (`.github/workflows/links.yml`): [lychee](https://lychee.cli.rs/) checks the links in all Markdown files weekly and whenever docs change on `main`. Broken links open (or update) the issue "Broken links in the docs". Links that can't work from CI (local URLs, placeholders, pages behind a login) are excluded in `.lycheeignore`.
+- Java and the dialog JavaScript are analysed by CodeQL (see below), so this repo runs no separate static analyser.
+- GitHub settings (set by Remy's setup script, not stored in the repo): **secret scanning with push protection** (a push containing a known token format is rejected; findings under *Security → Secret scanning*) and **CodeQL default setup** (findings under *Security → Code scanning* and as comments on pull requests; PHP isn't covered by CodeQL, which is why the PHP plugins run PHPStan).
+
+Before starting work in this repo, look at its open findings: code scanning alerts, secret scanning alerts, Dependabot PRs and the "Broken links in the docs" issue.
+
 <!-- supertext-plugins:start (shared list, keep identical in every Supertext plugin repo) -->
 ## Supertext plugins for other systems
 
