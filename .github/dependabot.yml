@@ -27,11 +27,11 @@ updates:
       # AEM 6.5 exports slf4j 1.7; slf4j 2.x makes the bundle import [2.0,3).
       - dependency-name: "org.slf4j:*"
         versions: [">=2"]
-      # 1.x has no `content-package` packaging any more (only remote
-      # install/build goals); building packages needs a migration to
+      # 0.5.24 adds package-dependency validation that fails on ui.apps'
+      # dependency declaration, and 1.x has no `content-package` packaging
+      # at all. Moving on means migrating to
       # org.apache.jackrabbit:filevault-package-maven-plugin.
       - dependency-name: "com.day.jcr.vault:content-package-maven-plugin"
-        versions: [">=1"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
