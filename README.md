@@ -38,6 +38,15 @@ Dependabot (`.github/dependabot.yml`) proposes Maven and GitHub Actions updates 
 - **Gson** and **slf4j** are imported from AEM's OSGi container, not embedded. The bundle's `Import-Package` range comes from the compile version, so Gson above 2.8 or slf4j 2.x (`[2.0,3)`) would leave the bundle unresolved on AEM 6.5 (which exports slf4j 1.7). Check `core/target/*.jar` → `META-INF/MANIFEST.MF` before changing either.
 - **`content-package-maven-plugin`** stays at 0.5.1: 0.5.24 adds package-dependency validation that fails on `ui.apps` (its dependency on `ui.content` isn't in Maven coordinates, and `/apps` isn't covered), and 1.x dropped the `content-package` packaging that `ui.apps` and `ui.content` use. Moving on is a separate migration to `org.apache.jackrabbit:filevault-package-maven-plugin`.
 
+## Language codes
+
+AEM's language codes (`de`, `de_ch`, `en-us`, …) are converted in `core/…/impl/LanguageCodes.java` (unit-tested) before the quote and the order are requested, following the rule used by all Supertext plugins:
+
+- **Source** (`SourceLang`): the bare language — `en_us`, `en-gb` → `en`.
+- **Target** (`TargetLanguages`): a regional code, normalized — `de_ch` → `de-CH`, `en-us` → `en-US`; scripts and numeric regions keep their form (`zh-Hant`, `es-419`). Supertext rejects target languages without a region (`INVALID_LANGUAGE_PAIR`), so a bare code gets a default: ar-SA, bg-BG, cs-CZ, da-DK, de-DE, el-GR, en-US, es-ES, et-EE, fi-FI, fr-FR, hr-HR, hu-HU, it-IT, ja-JP, ko-KR, lt-LT, lv-LV, nb-NO, nl-NL, pl-PL, pt-PT, ro-RO, ru-RU, sk-SK, sl-SI, sr-RS, sv-SE, th-TH, tr-TR, uk-UA, vi-VN, zh-CN. Unknown bare codes are sent unchanged, so Supertext's error names them.
+
+To translate into a specific variant (e.g. Swiss German), use the regional language in AEM (`de_ch`), not the bare one.
+
 ## Code quality and security checks
 
 - **Checks** workflow (`.github/workflows/checks.yml`): [actionlint](https://github.com/rhysd/actionlint) and [zizmor](https://docs.zizmor.sh/) lint the workflows on every push and pull request. Dependency review fails a pull request that adds a package with a known vulnerability (moderate or worse). Actions are pinned to commit SHAs; Dependabot keeps the pins up to date. To run the workflow lint locally: `pip install actionlint-py zizmor`, then `actionlint` and `zizmor .github/workflows` in the repo root.

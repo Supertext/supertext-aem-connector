@@ -581,9 +581,17 @@ public class SupertextTranslationServiceImpl extends AbstractTranslationService 
         return calendar.getTime();
     }
 
-    private String getSupertextLanguageCode(String languageCode) {
-        String supertextLanguageCode = languageCode.replace("_", "-");
-        log.debug("Changed language code {} to {}", new String[] { languageCode, supertextLanguageCode });
+    /** Supertext wants the source as bare language (en) ... */
+    private String getSupertextSourceLanguageCode(String languageCode) {
+        String supertextLanguageCode = LanguageCodes.source(languageCode);
+        log.debug("Changed source language code {} to {}", new String[] { languageCode, supertextLanguageCode });
+        return supertextLanguageCode;
+    }
+
+    /** ... and the target with a region (de_ch → de-CH, de → de-DE). */
+    private String getSupertextTargetLanguageCode(String languageCode) {
+        String supertextLanguageCode = LanguageCodes.target(languageCode);
+        log.debug("Changed target language code {} to {}", new String[] { languageCode, supertextLanguageCode });
         return supertextLanguageCode;
     }
 
@@ -610,8 +618,8 @@ public class SupertextTranslationServiceImpl extends AbstractTranslationService 
         ArrayList<Long> uploadedFiles = jcrOperator.getUploadedFiles(jobPath);
 
         long orderId = supertextApiClient.createOrder(jcrOperator.getName(jobPath),
-                getSupertextLanguageCode(jcrOperator.getSourceLanguage(jobPath)),
-                getSupertextLanguageCode(jcrOperator.getTargetLanguage(jobPath)), jcrOperator.getDescription(jobPath),
+                getSupertextSourceLanguageCode(jcrOperator.getSourceLanguage(jobPath)),
+                getSupertextTargetLanguageCode(jcrOperator.getTargetLanguage(jobPath)), jcrOperator.getDescription(jobPath),
                 uploadedFiles, OrderData.Status.NEW, jcrOperator.getOrderTypeConfigurationId(jobPath), deliveryId);
 
         jcrOperator.setSupertextId(jobPath, orderId);
@@ -620,8 +628,8 @@ public class SupertextTranslationServiceImpl extends AbstractTranslationService 
     private void updateScopeData(String jobPath)
             throws RepositoryException, SupertextApiClientException, ParseException, TranslationException {
         ArrayList<Long> uploadedFiles = jcrOperator.getUploadedFiles(jobPath);
-        Quote quote = supertextApiClient.getQuote(getSupertextLanguageCode(jcrOperator.getSourceLanguage(jobPath)),
-                getSupertextLanguageCode(jcrOperator.getTargetLanguage(jobPath)), uploadedFiles);
+        Quote quote = supertextApiClient.getQuote(getSupertextSourceLanguageCode(jcrOperator.getSourceLanguage(jobPath)),
+                getSupertextTargetLanguageCode(jcrOperator.getTargetLanguage(jobPath)), uploadedFiles);
         QuoteOption quoteOption = quote.getOptions().get(0);
         DeliveryOption deliveryOption = getDeliveryOption(jcrOperator.getDueDate(jobPath), quoteOption);
         Date deliveryDate = ISO_DATE_FORMAT.parse(deliveryOption.getDeliveryDate());
