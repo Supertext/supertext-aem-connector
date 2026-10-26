@@ -1,2 +1,4 @@
 # Adobe's product pages block automated clients (the connection is reset); the links work in a browser.
 ^https://business\.adobe\.com/
+# Supertext's internal SharePoint knowledge base needs a Supertext login (401 from CI).
+^https://supertextag\.sharepoint\.com/

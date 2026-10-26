@@ -32,6 +32,10 @@ updates:
       # at all. Moving on means migrating to
       # org.apache.jackrabbit:filevault-package-maven-plugin.
       - dependency-name: "com.day.jcr.vault:content-package-maven-plugin"
+      # 6.x is built on bnd 7, which needs Java 17; CI and AEM 6.5 builds
+      # run on JDK 8 and 11. Stay on 5.x or lower until Java 8/11 is dropped.
+      - dependency-name: "org.apache.felix:maven-bundle-plugin"
+        versions: [">=6"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

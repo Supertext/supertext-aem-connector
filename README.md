@@ -37,6 +37,7 @@ Dependabot (`.github/dependabot.yml`) proposes Maven and GitHub Actions updates 
 - **APIs provided by AEM 6.5** (`uber-jar`, OSGi, Felix SCR annotations, Sling Models API, JCR, Servlet/JSP, `cq-wcm-taglib`) stay at the versions AEM 6.5 ships. Newer ones compile against APIs 6.5 doesn't have (e.g. `uber-jar` 6.6.x).
 - **Gson** and **slf4j** are imported from AEM's OSGi container, not embedded. The bundle's `Import-Package` range comes from the compile version, so Gson above 2.8 or slf4j 2.x (`[2.0,3)`) would leave the bundle unresolved on AEM 6.5 (which exports slf4j 1.7). Check `core/target/*.jar` → `META-INF/MANIFEST.MF` before changing either.
 - **`content-package-maven-plugin`** stays at 0.5.1: 0.5.24 adds package-dependency validation that fails on `ui.apps` (its dependency on `ui.content` isn't in Maven coordinates, and `/apps` isn't covered), and 1.x dropped the `content-package` packaging that `ui.apps` and `ui.content` use. Moving on is a separate migration to `org.apache.jackrabbit:filevault-package-maven-plugin`.
+- **`maven-bundle-plugin`** stays below 6.0: 6.x is built on bnd 7, which needs Java 17, and the build must run on JDK 8 and 11 (CI fails with 6.2.0).
 
 ## Language codes
 
